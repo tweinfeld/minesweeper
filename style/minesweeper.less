@@ -1,0 +1,216 @@
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  background-color: #444;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.seven-segment {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+  & > div {
+    display: inline-block;
+    width: 11px;
+    height: 21px;
+    margin: 0;
+    padding: 0;
+    border: solid 1px #000;
+    &.n0 { background-position: -11px * 0 -30px; }
+    &.n1 { background-position: -11px * 1 -30px; }
+    &.n2 { background-position: -11px * 2 -30px; }
+    &.n3 { background-position: -11px * 3 -30px; }
+    &.n4 { background-position: -11px * 4 -30px; }
+    &.n5 { background-position: -11px * 5 -30px; }
+    &.n6 { background-position: -11px * 6 -30px; }
+    &.n7 { background-position: -11px * 7 -30px; }
+    &.n8 { background-position: -11px * 8 -30px; }
+    &.n9 { background-position: -11px * 9 -30px; }
+  }
+}
+
+.sprite {
+  background-image: data-uri('./image/sprite.png');
+  background-repeat: no-repeat;
+  background-position: -1000px -1000px;
+}
+
+div.xp-machine {
+
+  position: relative;
+  width: 800px;
+  height: 600px;
+  background-color: #6f99b9;
+  background-image: data-uri('./image/xp_bliss.jpg');
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  border-radius: 5px;
+  align-items: center;
+  border: solid 1px #6f99b9;
+
+  div.clock {
+    font-family: arial;
+    font-size: 12px;
+    color: #eee;
+    bottom: 8px;
+    position: absolute;
+    right: 22px;
+  }
+}
+
+div.minesweeper {
+  position: relative;
+  user-select: none;
+  -moz-user-select: none;
+  background-color: #c0c0c0;
+  padding: 40px 6px 6px 6px;
+  transform-origin: 0 0;
+  border: solid 1px #000;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+
+  > select.difficulty {
+    position: absolute;
+    transform: translate(-50%, 0);
+    left: 50%;
+    text-align: center;
+    top: -50px;
+    border: solid 5px rgba(0, 0, 0, 0.3);
+    background-clip: padding-box;
+    padding: 3px;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  > ol {
+    padding: 0;
+    margin: 0;
+    display: block;
+    list-style: none;
+    position: relative;
+    border: solid 3px #fff;
+    border-top-color: #808080;
+    border-left-color: #808080;
+
+    > li {
+      cursor: pointer;
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      background-color: #c0c0c0;
+      box-sizing: border-box;
+      border: solid 2px #fff;
+      border-bottom-color: #808080;
+      border-right-color: #808080;
+
+      &.one:after, &.two:after, &.three:after, &.four:after, &.five:after, &.six:after, &.seven:after, &.eight:after {
+        position: absolute;
+        display: block;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        line-height: 16px;
+        font-family: Arial, Helvetica, sans-serif;
+        font-weight: bold;
+        font-size: 9px;
+      }
+
+      .createNum(@color, @content){
+        &:after {
+          color: @color;
+          content: @content;
+        }
+      }
+
+      &.one { .createNum(#0000ff, "1") }
+      &.two { .createNum(#008000, "2") }
+      &.three { .createNum(#ff0000, "3") }
+      &.four { .createNum(#000080, "4") }
+      &.five { .createNum(#0000ff, "5") }
+      &.six { .createNum(#008000, "6") }
+      &.seven { .createNum(#ff0000, "7") }
+      &.eight { .createNum(#000080, "8") }
+
+      &.reveal {
+        border: solid 1px #808080;
+        border-bottom: none;
+        border-right: none;
+      }
+
+      &.flag {
+        background-position: -27px 0;
+      }
+
+      &.mine, &.unfound-mine, &.found-mine {
+
+        &:after {
+          position: absolute;
+          top: 1px;
+          left: 1px;
+          width: 13px;
+          height: 13px;
+          display: block;
+          content: "";
+          background-image: inherit;
+          background-position: 0 0;
+        }
+
+        &.mine {
+          background-color: #ff0000;
+        }
+
+        &.found-mine {
+          &:after {
+            background-position: -13px 0;
+          }
+        }
+      }
+    }
+  }
+
+  > div.flag-left-counter, > div.timer-counter {
+    box-sizing: content-box;
+    height: 23px;
+    position: absolute;
+    top: 9px;
+    border: solid 1px #808080;
+    border-bottom-color: #fff;
+    border-right-color: #fff;
+  }
+
+  > div.flag-left-counter {
+    left: 7px;
+  }
+
+  > div.timer-counter {
+    right: 7px;
+  }
+
+  > i.status {
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    margin-left: -13px;
+    top: 9px;
+    padding: 3px;
+    display: block;
+    background-clip: content-box;
+    border-radius: 3px;
+    border: solid 1px #808080;
+    width: 17px;
+    height: 17px;
+    &.alive { background-position: -14px -10px; }
+    &.dead { background-position: 3px -10px; }
+    &.hesitate { background-position: -31px -10px; }
+  }
+}
