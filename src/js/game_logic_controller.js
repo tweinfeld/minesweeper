@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { shuffle, range, flow, inRange, assign } from 'lodash';
 
 const
     DEFAULT_FIELD_WIDTH = 9,
@@ -11,15 +11,15 @@ export default function (fieldWidth = DEFAULT_FIELD_WIDTH,
 
     const
         totalSquares = fieldWidth * fieldHeight,
-        mineSet = new Set(_.shuffle(_.range(totalSquares)).slice(-numberOfMines)),
+        mineSet = new Set(shuffle(range(totalSquares)).slice(-numberOfMines)),
         flagSet = new Set(),
         revealSet = new Set(),
         indexToCoordinates = (index) => [index % fieldWidth, ~~(index / fieldWidth)],
         coordinatesToIndex = ([x, y]) => y * fieldWidth + x,
-        siblingCoordinates = ([x, y]) => [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]].map(([ax, ay]) => [ax + x, ay + y]).filter(([x, y]) => _.inRange(x, 0, fieldWidth) && _.inRange(y, 0, fieldHeight));
+        siblingCoordinates = ([x, y]) => [[0, -1], [1, -1], [1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1]].map(([ax, ay]) => [ax + x, ay + y]).filter(([x, y]) => inRange(x, 0, fieldWidth) && inRange(y, 0, fieldHeight));
 
     return {
-        toggleFlag: _.flow(coordinatesToIndex, (squareIndex) => {
+        toggleFlag: flow(coordinatesToIndex, (squareIndex) => {
             if (!revealSet.has(squareIndex)) {
                 flagSet[flagSet.has(squareIndex) ? "delete" : flagSet.size < numberOfMines ? "add" : "has"](squareIndex);
             }
@@ -37,14 +37,14 @@ export default function (fieldWidth = DEFAULT_FIELD_WIDTH,
             scanAndReveal(coordinates);
         },
         getState: () => ({
-            field: _.range(totalSquares).map((squareIndex) => {
+            field: range(totalSquares).map((squareIndex) => {
                 let
                     [x, y] = indexToCoordinates(squareIndex),
                     isRevealed = revealSet.has(squareIndex),
                     isMine = mineSet.has(squareIndex),
                     isFlag = flagSet.has(squareIndex);
 
-                return _.assign({
+                return assign({
                     x,
                     y,
                     isMine,
