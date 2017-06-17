@@ -14,7 +14,9 @@ module.exports = {
         new webpack.optimize.UglifyJsPlugin(),
         new HtmlWebpackPlugin({
             title: "Minesweeper",
-            template: "./src/index.ejs"
+            template: "./src/index.ejs",
+            _uaTrackerId: "UA-1155730-4",
+            _addThisId: "ra-5944e3ada48860df"
         })
     ],
     output: {
