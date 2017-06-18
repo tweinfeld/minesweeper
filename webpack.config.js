@@ -4,11 +4,11 @@ const
     HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './src/js/web_interface.js',
+    entry: "./src/js/web_interface.js",
     plugins: [
         new webpack.DefinePlugin({
-            'process.env': {
-                'NODE_ENV': JSON.stringify('production')
+            "process.env": {
+                "NODE_ENV": "'production'"
             }
         }),
         new webpack.optimize.UglifyJsPlugin(),
@@ -20,7 +20,7 @@ module.exports = {
         })
     ],
     output: {
-        filename: 'minesweeper.js',
+        filename: "minesweeper.js",
         path: path.resolve(__dirname, 'dist')
     },
     module: {
@@ -28,28 +28,11 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /(node_modules|bower_components)/,
-                use: {
-                    loader: 'babel-loader',
-                    options: {
-                        presets: ['env']
-                    }
-                }
+                use: ["babel-loader?presets=env"]
             },
             {
                 test: /\.less$/,
-                use: [{
-                    loader: "style-loader"
-                },
-                    {
-                        loader: "css-loader", options: {
-                        url: false
-                    }
-
-                    }, {
-                        loader: "less-loader", options: {
-                            ieCompat: false
-                        }
-                    }]
+                use: ["style-loader", "css-loader?url=false","less-loader?ieCompat=false"]
             }]
     }
 };
