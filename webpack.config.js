@@ -15,6 +15,7 @@ module.exports = {
         new HtmlWebpackPlugin({
             title: "Minesweeper",
             template: "./src/index.ejs",
+            favicon: "./src/style/image/favicon.png",
             _uaTrackerId: "UA-1155730-4",
             _addThisId: "ra-5944e3ada48860df"
         })
